@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iiison/ctm-frontend.git"
+    "url": "git+https://github.com/iiison/flash-demo.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iiison/ctm-frontend/issues"
+    "url": "https://github.com/iiison/flash-demo/issues"
   },
-  "homepage": "https://github.com/iiison/ctm-frontend#readme",
+  "homepage": "https://github.com/iiison/flash-demo#readme",
   "devDependencies": {
     "autoprefixer": "^7.0.0",
     "babel-core": "^6.21.0",
