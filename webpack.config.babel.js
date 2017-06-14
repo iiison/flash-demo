@@ -11,23 +11,28 @@ MM.        8M     M8 MM    MM    MM    MM  WmmmP"
                                           Ybmmmd'
 */
 
-import path              from 'path'
-import webpack           from 'webpack'
+import path                  from 'path'
+import webpack               from 'webpack'
 // import webpackLoadPlugins from 'webpack-load-plugins'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import StyleLintPlugin   from 'stylelint-webpack-plugin'
+import HtmlWebpackPlugin     from 'html-webpack-plugin'
+import ExtractTextPlugin     from 'extract-text-webpack-plugin'
+import StyleLintPlugin       from 'stylelint-webpack-plugin'
+import CopyWebpackPlugin     from 'copy-webpack-plugin'
 
 import { devStyleConfig, prodStyleConfig } from './build-configs'
-
+console.log('%c <><><><><><><><><><><><><><><>', 'color: green, font-weight: bold')
+console.log(__dirname + "/helpers")
+console.log('%c <><><><><><><><><><><><><><><>', 'color: green, font-weight: bold')
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 const isProd         = LAUNCH_COMMAND === 'production'
-const TARGET         = !isProd ? 'https://reqres.in' : ''
+const TARGET         = !isProd ? 'http://localhost:3000/' : ''
 const PATHS          = {
   js         : path.join(__dirname, 'js'),
   styles     : path.join(__dirname, 'styles'),
   build      : path.join(__dirname, 'build'),
-  buildConfs : path.join(__dirname, 'build-configs')
+  buildConfs : path.join(__dirname, 'build-configs'),
+  configs    : path.join(__dirname, 'configs'),
+  helpers    : path.join(__dirname, 'templates/helpers')
 }
 
 // Plugins Config Starts
@@ -61,6 +66,13 @@ const styleLintConfig = new StyleLintPlugin({
   failOnError : false,
   configFile  : 'stylelint.config.js'
 })
+
+const copyWebpackPluginConfig = new CopyWebpackPlugin([
+  {
+    from : 'assets/images',
+    to : path.join(__dirname, 'build/assets/images')
+  }
+])
 // Plugins Config Ends
 
 
@@ -95,8 +107,9 @@ const base = {
         use     : 'babel-loader'
       },
       {
-        test   : /\.tpl$/,
-        use    : 'handlebars-loader'
+        test   : /\.(tpl|hbs)$/,
+        loader : "handlebars-loader?helperDirs[]=" + __dirname + "/js/helpers"
+        // use    : 'handlebars-loader?helperDirs[]=false' + __dirname + 'templates/helpers'
       },
       {
         test    : /\.css$/,
@@ -106,20 +119,26 @@ const base = {
     ]
   },
   resolve : {
-    modules    : [path.resolve('.'), 'node_modules'],
+    modules    : [
+      path.resolve('.'),
+      path.resolve('./templates/helpers/'),
+      'node_modules'
+    ],
     extensions : ['.js'],
     alias      : {
       '$js'        : PATHS.js,
       '$models'    : `${PATHS.js}/models`,
+      '$events'    : `${PATHS.js}/events`,
       '$pageConfs' : `${PATHS.js}/page-configs`,
       '$lib'       : `${PATHS.js}/lib`,
-      '$utils'     : `${PATHS.js}/utils`
+      '$utils'     : `${PATHS.js}/utils`,
+      '$configs'   : PATHS.configs
     }
   },
   target : 'web'
 }
 
-const commonPlugins = [HTMLWebpackPluginConfig, commonsVendorChunk, styleLintConfig]
+const commonPlugins = [HTMLWebpackPluginConfig, commonsVendorChunk, styleLintConfig, copyWebpackPluginConfig]
 
 const prodConf = {
   devtool : 'false',
@@ -136,16 +155,14 @@ const devConf = {
     contentBase        : PATHS.build,
     clientLogLevel     : 'info',
     overlay : {
-      errors  :true
+      // errors  :true
     },
-    /*
-    proxy : {
-      '**' : {
-        target : TARGET,
-        secure : false
-      }
-    }
-    */
+    // proxy : {
+    //   '**' : {
+    //     target : TARGET,
+    //     secure : false
+    //   }
+    // }
   },
   plugins: commonPlugins.concat([new webpack.HotModuleReplacementPlugin()])
 }

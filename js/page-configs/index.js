@@ -1,2 +1,4 @@
 export login from './login'
-export home from './home'
+export products from './products'
+export cart from './cart'
+export product from './product'

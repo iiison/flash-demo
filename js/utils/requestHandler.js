@@ -1,4 +1,10 @@
 import axios from 'axios'
+import confs from '$configs/configs.json'
+
+const axiosRef = axios.create({
+  baseURL : confs.API,
+  timeout : 1000
+})
 
 const defaultHeaders = {
   'Content-Type' : 'application/json'
@@ -15,7 +21,7 @@ export function get(url) {
     return false
   }
 
-  return axios.get(url)
+  return axiosRef.get(url)
 }
 /* eslint-enable */
 /**
@@ -37,7 +43,7 @@ export function post(reqObj) {
   reqObj.payload = reqObj.payload || {}
   reqObj.headers = reqObj.headers || {}
 
-  return axios({
+  return axiosRef({
     method  : 'post',
     url     : reqObj.url,
     data    : {

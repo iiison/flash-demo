@@ -221,7 +221,8 @@ const baseRules = {
   "no-restricted-syntax": [0, "WithStatement"],
   "new-cap" : 0,
   "guard-for-in" : 0,
-  "import/prefer-default-export" : 0
+  "import/prefer-default-export" : 0,
+  "no-plusplus" : 0
 };
 
 const PROD = {

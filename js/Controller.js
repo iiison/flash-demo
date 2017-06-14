@@ -6,6 +6,8 @@ import * as pageConfigs from '$pageConfs'
 
 import { getTemplate } from '$utils'
 
+import loading from '../templates/loading.tpl'
+
 
 /**
  * Main Class, instentiates View and Model
@@ -23,12 +25,7 @@ class Controller extends Base {
 
     this.view.on('change:viewName', (viewName) => {
       getTemplate(viewName, this).then(() => {
-        const templateData = this.view.get('templates')[viewName]
-        const styles       = templateData.styles
-
-        this.view.render(templateData.template, {
-          styles
-        })
+        this.view.render(loading)
         pageConfigs[viewName].setupPageData()
       })
     })

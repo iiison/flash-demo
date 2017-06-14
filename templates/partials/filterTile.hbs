@@ -1,0 +1,13 @@
+<div class="top-border margin-bottom">
+  <h2 class="t-upper">{{this.name}}</h2>
+  <div class="filter-controls">
+    {{#each this.values}}
+      <div>
+        <label>
+          <input type="checkbox" name="this" data-id="{{this}}" class="filter {{../name}}">
+          <span>{{this}}</span>
+        </label>
+      </div>
+    {{/each}}
+  </div>
+</div>

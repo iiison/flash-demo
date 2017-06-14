@@ -14,15 +14,37 @@ function getUsers() {
     })
 }
 
+/**
+ * Get all users
+ * @return {Promise} User data promise
+ */
+function getProducts() {
+  return controller
+    .model
+    .emit('GET_PRODUCTS')
+    .then((data) => data)
+    .catch((error) => {
+      throw error
+    })
+}
 
 /**
  * Setup login page data, call user data for the first time
  * @return {[type]} [description]
  */
 function setupPageData() {
-  return Promise.all([getUsers()])
+  return Promise.all([getUsers(), getProducts()])
     .then((response) => {
-      controller.model.set('homePage', response[0].data.data)
+      const modelData = controller.model.get()
+
+      modelData.homePage = response[0].data.data
+      modelData.products = response[1].data
+
+      controller.model.set(modelData)
+
+      console.log('%c <><><><><><><><><><><><><><><>', 'color: green, font-weight: bold')
+      console.log(controller.model.get())
+      console.log('%c <><><><><><><><><><><><><><><>', 'color: green, font-weight: bold')
     })
 }
 

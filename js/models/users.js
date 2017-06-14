@@ -2,10 +2,9 @@ import { get } from '$utils'
 
 /**
  * Calls GetUser API and returns the data
- * @param  {Object} payLoad  Data to be sent to the API
  * @return {Promise}         XHR Promise
  */
-function getUser(payLoad) {
+function getUser() {
   return get('https://reqres.in/api/users/2')
 }
 

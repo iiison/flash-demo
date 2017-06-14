@@ -1,0 +1,23 @@
+<div class="padded-left u-4-24">
+  <form action="#">
+    {{#each data.filters.all}}
+      <div class="top-border margin-bottom">
+        <h2 class="t-upper">{{this.name}}</h2>
+        <div class="filter-controls">
+          {{#each this.values}}
+            <div>
+              <label>
+                {{#testChecked this ../../data.filters.active}}
+                  <input type="checkbox" name="this" data-id="{{this}}" class="filter {{../name}}" checked />
+                {{else}}
+                  <input type="checkbox" name="this" data-id="{{this}}" class="filter {{../name}}" />
+                {{/testChecked}}
+                <span>{{this}}</span>
+              </label>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/each}}
+  </form>
+</div>

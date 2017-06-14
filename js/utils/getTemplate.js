@@ -59,6 +59,54 @@ export function getTemplate(templateName, controllerRef) {
         throw error
       })
 
+    case 'products' :
+      return Promise.all([
+        System.import('templates/products.tpl'),
+        System.import('styles/modules/products.css')
+      ]).then((modules) => {
+        const templatesData = {
+          template : modules[0],
+          styles   : modules[1]
+        }
+
+        setupTemplatesData(templatesData)
+      })
+     .catch((error) => {
+       throw error
+     })
+
+    case 'cart' :
+      return Promise.all([
+        System.import('templates/cart.tpl'),
+        System.import('styles/modules/products.css')
+      ]).then((modules) => {
+        const templatesData = {
+          template : modules[0],
+          styles   : modules[1]
+        }
+
+        setupTemplatesData(templatesData)
+      })
+     .catch((error) => {
+       throw error
+     })
+
+    case 'product' :
+      return Promise.all([
+        System.import('templates/product.tpl'),
+        System.import('styles/modules/products.css')
+      ]).then((modules) => {
+        const templatesData = {
+          template : modules[0],
+          styles   : modules[1]
+        }
+
+        setupTemplatesData(templatesData)
+      })
+     .catch((error) => {
+       throw error
+     })
+
  // Flash-generator, add new function here
 
     default:

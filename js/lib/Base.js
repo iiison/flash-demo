@@ -14,31 +14,38 @@ export default class Base {
 
   /**
    * Set property to `data` variable of the instance
-   * @param {String/Object} prop   Property to set on `data`, pass an
-   *                               object if need to set props in burst
-   * @param {any}           value  Value of Prop, don't send this variable
-   *                               if passing `prop` as an object
-   * @return {Object}              Updated `data`
+   * @param {String/Object} prop            Property to set on `data`, pass an
+   *                                        object if need to set props in burst
+   * @param {any}           value           Value of Prop, don't send this variable
+   *                                        if passing `prop` as an object
+   * @param {Boolean}       isSilentUpdate  set it to true if you don't want to
+   *                                        execute the watcher
+   *
+   * @return {Object}                       Updated `data`
    */
-  set(prop, value) {
+  set(prop, value, isSilentUpdate) {
     const setProp = (prp, val) => {
       this.data[prp] = val
     }
 
-    if (Object(prop) === prop) {
-      for (const iterator in prop) {
-        setProp(iterator, prop[iterator])
-      }
+    if (!prop && Object(value) === value) {
+      this.data = value
     } else {
-      setProp(prop, value)
-    }
+      if (Object(prop) === prop) {
+        for (const iterator in prop) {
+          setProp(iterator, prop[iterator])
+        }
+      } else {
+        setProp(prop, value)
+      }
 
-    if (this.observables[prop]) {
-      this.emit(prop, value)
+      if (!isSilentUpdate && this.observables[prop]) {
+        this.emit(prop, value)
+      }
     }
 
     // OPTIMIZE: optimize this call.
-    if (this.observables.data) {
+    if (!isSilentUpdate && this.observables.data) {
       this.emit('data', value)
     }
 

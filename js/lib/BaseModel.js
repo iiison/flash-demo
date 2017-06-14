@@ -15,7 +15,9 @@ export default class BaseModel extends Base {
       if (onModalDataChange && typeof onModalDataChange === 'function') {
         onModalDataChange(data)
       } else {
+         /* eslint-disable no-console*/
         console.warn('No on data change function found. You can pass one while creating instance of Model')
+         /* eslint-enable*/
       }
 
       return this.get()

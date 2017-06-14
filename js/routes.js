@@ -24,13 +24,27 @@ export default function initRoutes(controller) {
       home() {
         controller.view.set('viewName', 'home')
       },
+      products() {
+        controller.view.set('viewName', 'products')
+      },
+      cart() {
+        controller.view.set('viewName', 'cart')
+      },
+      product(ctx) {
+        controller.model.set('product', {
+          id : ctx.params.id
+        }, true)
+        controller.view.set('viewName', 'product')
+      },
       // Flash-generator, Add New route function Here
     }
 
     // Set base URL, all paths will include the base path
     // page.base('/app/')
-    page('/', routes.landing)
+    page('/', routes.products)
     page('/home', routes.home)
+    page('/cart', routes.cart)
+    page('/product/:id', routes.product)
     // Flash-generator, Add New routes Here
     page()
   }
