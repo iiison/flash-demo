@@ -65,5 +65,5 @@ export default function pageDataMap(viewName) {
     }
   }
 
-  return map[viewName]()
+  return typeof map[viewName] === 'function' ? map[viewName]() : {}
 }
