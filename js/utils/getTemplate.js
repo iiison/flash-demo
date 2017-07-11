@@ -27,38 +27,6 @@ export function getTemplate(templateName, controllerRef) {
 
   if (!templates[viewName]) {
     switch (templateName) {
-    case 'login':
-      return Promise.all([
-        System.import('templates/login.tpl'),
-        System.import('styles/base.css')
-      ]).then((modules) => {
-        const templatesData = {
-          template : modules[0],
-          styles   : modules[1]
-        }
-
-        setupTemplatesData(templatesData)
-      })
-      .catch((error) => {
-        throw error
-      })
-
-    case 'home':
-      return Promise.all([
-        System.import('templates/home.tpl'),
-        System.import('styles/base1.css')
-      ]).then((modules) => {
-        const templatesData = {
-          template : modules[0],
-          styles   : modules[1]
-        }
-
-        setupTemplatesData(templatesData)
-      })
-      .catch((error) => {
-        throw error
-      })
-
     case 'products' :
       return Promise.all([
         System.import('templates/products.tpl'),
