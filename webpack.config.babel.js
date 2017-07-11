@@ -20,9 +20,7 @@ import StyleLintPlugin       from 'stylelint-webpack-plugin'
 import CopyWebpackPlugin     from 'copy-webpack-plugin'
 
 import { devStyleConfig, prodStyleConfig } from './build-configs'
-console.log('%c <><><><><><><><><><><><><><><>', 'color: green, font-weight: bold')
-console.log(__dirname + "/helpers")
-console.log('%c <><><><><><><><><><><><><><><>', 'color: green, font-weight: bold')
+
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 const isProd         = LAUNCH_COMMAND === 'production'
 const TARGET         = !isProd ? 'http://localhost:3000/' : ''
